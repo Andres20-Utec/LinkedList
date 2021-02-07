@@ -14,6 +14,35 @@ class LinkedList{
         this->head = new Node<T>(data, head);
         size++;
     }
+    
+    void popFront(){
+        if(!head)
+            return;
+        else{
+            Node<T>* current = head;
+            this->head = current->next;
+            delete current;
+            size--;
+        }
+    }
+
+    void popBack(){
+        if(head== nullptr){
+            return;
+        }else if(!head->next){
+            delete head;
+            this->head = nullptr;
+            size--;
+        }else{
+            Node<T>* current = head;
+            while(current->next->next){
+                current = current->next;
+            }
+            delete current->next;
+            current->next = nullptr;
+            size--;
+        }
+    }
 
     void pushBack(T data){
         Node<T>* newNode = new Node<T>(data);

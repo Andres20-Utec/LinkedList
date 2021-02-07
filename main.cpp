@@ -12,5 +12,9 @@ int main(){
     lk.reverse();
     lk.print();
     cout << lk[2] << endl;
+    lk.popFront();
+    lk.popBack();
+    lk.popBack();
+    lk.print();
     return 0;
 }
