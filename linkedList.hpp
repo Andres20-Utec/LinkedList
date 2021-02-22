@@ -19,9 +19,9 @@ class LinkedList{
         if(!head)
             return;
         else{
-            Node<T>* current = head;
-            this->head = current->next;
-            delete current;
+            Node<T>* head_ = head;
+            this->head = head_->next;
+            delete head_;
             size--;
         }
     }
@@ -34,12 +34,12 @@ class LinkedList{
             this->head = nullptr;
             size--;
         }else{
-            Node<T>* current = head;
-            while(current->next->next){
-                current = current->next;
+            Node<T>* head_ = head;
+            while(head_->next->next){
+                head_ = head_->next;
             }
-            delete current->next;
-            current->next = nullptr;
+            delete head_->next;
+            head_->next = nullptr;
             size--;
         }
     }
@@ -55,7 +55,60 @@ class LinkedList{
             }
             lastN->next = newNode;
         }
-        size++;
+        size++; 
+    }
+    
+    void sort(){
+   		this->head = sortLk(this->head);
+    }
+
+    Node<T>* sortLk(Node<T>* head_){
+        if(!head_ || !head_->next){
+            return head_;
+        }
+        Node<T>* left = head_;
+        Node<T>* right = head_;
+        while(right && right->next){
+            right = right->next;
+            if(right->next) left = left->next;
+            if(right->next) right = right->next;
+        }
+        right = left->next;
+        left->next = nullptr;
+        return merge(sortLk(head_), sortLk(right));
+    }
+
+    Node<T>* merge(Node<T>* n1, Node<T>* n2){
+        if(n1 && n2) this->head = n1->data > n2->data ? n2: n1;
+        else this->head = n1 ? n1 : n2;
+        Node<T>* current = this->head;
+        if(this->head == n1) n1 = n1->next;
+        else n2 = n2->next;
+
+        while(n1 && n2){
+            if(n1->data > n2->data){
+                current->next = n2;
+                n2 = n2->next;
+            }else{
+                current->next = n1;
+                n1 = n1->next;
+            }
+            current = current->next;
+        }
+
+        while(n1){
+            current->next = n1;
+            n1 = n1->next;
+            current = current->next;
+        }
+
+        while(n2){
+            current->next = n2;
+            n2 = n2->next;
+            current = current->next;
+            
+        }
+        return this->head;
     }
 
     T front(){
@@ -109,13 +162,13 @@ class LinkedList{
         if(!head)
             return;
         else{
-            Node<T>* current = head;
+            Node<T>* head_ = head;
             Node<T>* prev = nullptr;
-            while(current){
-                Node<T>* saveN = current->next;
-                current->next = prev;
-                prev = current;
-                current = saveN;
+            while(head_){
+                Node<T>* saveN = head_->next;
+                head_->next = prev;
+                prev = head_;
+                head_ = saveN;
             }
             this->head = prev;
         }
