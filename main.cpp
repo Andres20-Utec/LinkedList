@@ -1,4 +1,5 @@
 #include "linkedList.hpp"
+#include "iterators/forwardIterator.hpp"
 //#include <bitset/stdc++.h>
 
 int main(){
@@ -19,5 +20,9 @@ int main(){
     lk.print();
     lk.sort();
     lk.print();
+    ForwardIterator<int> fi = lk.begin();
+    cout << *fi << endl;
+    ++fi;
+    cout << *fi << endl;
     return 0;
 }

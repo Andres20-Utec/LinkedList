@@ -1,6 +1,6 @@
 #pragma once
 #include "node.hpp"
-
+#include "iterators/forwardIterator.hpp"
 
 template <typename T>
 class LinkedList{
@@ -9,6 +9,14 @@ class LinkedList{
     int size;
     public:
     LinkedList():head(nullptr), size(0){}
+
+    ForwardIterator<T> begin(){
+        return ForwardIterator<T>(this->head);
+    }
+
+    ForwardIterator<T> end(){
+        return ForwardIterator<T>(nullptr);
+    }
 
     void pushFront(T data){
         this->head = new Node<T>(data, head);
